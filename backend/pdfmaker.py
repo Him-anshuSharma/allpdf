@@ -3,7 +3,7 @@ import subprocess
 from PyPDF2 import PdfMerger
 from flask import Flask, request, jsonify, send_file, render_template
 
-app = Flask(__name__,  template_folder=os.path.join(os.path.dirname(__file__), '../frontend'))
+app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), '../frontend'), template_folder=os.path.join(os.path.dirname(__file__), '../frontend'))
 
 def convert_to_pdf(file_path, output_folder):
     # Converts .docx, .doc, .pptx files to PDF using LibreOffice

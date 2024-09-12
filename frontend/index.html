@@ -4,75 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convert and Merge PDFs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background: #fff;
-            padding: 2em;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-        h1 {
-            margin-bottom: 1em;
-            font-size: 24px;
-        }
-        input[type="file"] {
-            margin-bottom: 1em;
-        }
-        button {
-            padding: 0.5em 1em;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>Convert and Merge PDFs</h1>
+        <p>Upload your files and merge them into a single PDF document. Supports .docx, .doc, .pptx, and .pdf file types.</p>
         <form id="uploadForm" action="/convert_and_merge" method="post" enctype="multipart/form-data">
             <input type="file" name="files" multiple required>
             <button type="submit">Upload and Merge</button>
+            <div class="waiting-animation" style="display: none;"></div>
         </form>
         <div id="result"></div>
+        <p class="description">Our file merge tool allows you to combine multiple files into a single PDF document. Simply upload your files, and our system will convert and merge them into a single PDF file. You can then download the merged PDF file to your computer.</p>
     </div>
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/convert_and_merge', true);
-            xhr.responseType = 'blob'; // To handle the file download
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    var a = document.createElement('a');
-                    a.href = window.URL.createObjectURL(xhr.response);
-                    a.download = 'merged_output.pdf';
-                    a.click();
-                } else {
-                    document.getElementById('result').textContent = 'An error occurred while processing the files.';
-                }
-            };
-
-            xhr.send(formData);
-        });
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
