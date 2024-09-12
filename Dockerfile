@@ -8,7 +8,6 @@ ENV PYTHONUNBUFFERED 1
 # Set the working directory in the container
 WORKDIR /app
 
-
 # Install LibreOffice and any other system dependencies
 RUN apt-get update && apt-get install -y libreoffice --no-install-recommends && apt-get clean
 
@@ -22,6 +21,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Command to run the Flask app
-CMD ["gunicorn", "backend.app:app"]
+CMD ["gunicorn", "backend.pdfmaker:app"]
 
 
