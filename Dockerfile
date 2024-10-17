@@ -1,27 +1,24 @@
-# Use the official Python image from DockerHub
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Install dependencies (LibreOffice and Python libraries)
+RUN apt-get update && apt-get install -y \
+    libreoffice \
+    libreoffice-writer \
+    libreoffice-calc \
+    libreoffice-impress \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Install LibreOffice and any other system dependencies
-RUN apt-get update && apt-get install -y libreoffice
-RUN apt-get install libreoffice-writer
-
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install Python dependencies
+# Install pip packages
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port that the Flask app will run on
+# Copy the rest of your application
+COPY . /app
+WORKDIR /app
+
+# Expose the port Flask will run on
 EXPOSE 5000
 
-# Command to run the Flask app
-CMD ["gunicorn", "backend.pdfmaker:app"]
-
-
+# Command to run the Flask application
+CMD ["python", "backend/pdfmaker.py"]
