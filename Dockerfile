@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # Install LibreOffice and any other system dependencies
-RUN apt-get update && apt-get install -y libreoffice --no-install-recommends && apt-get clean
+RUN apt-get update && apt-get install -y libreoffice
 
 # Copy the current directory contents into the container at /app
 COPY . /app
