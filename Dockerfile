@@ -10,6 +10,7 @@ WORKDIR /app
 
 # Install LibreOffice and any other system dependencies
 RUN apt-get update && apt-get install -y libreoffice
+RUN apt-get install libreoffice-writer
 
 # Copy the current directory contents into the container at /app
 COPY . /app
